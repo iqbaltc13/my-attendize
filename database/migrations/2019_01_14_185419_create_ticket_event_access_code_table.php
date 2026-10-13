@@ -14,7 +14,7 @@ class CreateTicketEventAccessCodeTable extends Migration
     public function up()
     {
         Schema::create('ticket_event_access_code', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->unsignedInteger('ticket_id');
             $table->unsignedInteger('event_access_code_id');
             $table->timestamps();

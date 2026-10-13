@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('reserved_tickets', function ($table) {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->integer('ticket_id');
             $table->integer('event_id');
             $table->integer('quantity_reserved');
@@ -71,7 +71,7 @@ class CreateUsersTable extends Migration
          * Accounts table
          */
         Schema::create('accounts', function ($t) {
-            $t->increments('id');
+            $t->string('id',255)->primary();
 
             $t->string('first_name');
             $t->string('last_name');
@@ -120,7 +120,7 @@ class CreateUsersTable extends Migration
          */
         Schema::create('users', function ($t) {
 
-            $t->increments('id');
+            $t->string('id',255)->primary();
             $t->unsignedInteger('account_id')->index();
             $t->nullableTimestamps();
             $t->softDeletes();
@@ -141,7 +141,7 @@ class CreateUsersTable extends Migration
 
         Schema::create('organisers', function ($table) {
 
-            $table->increments('id')->index();
+            $table->string('id',255)->primary();
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -164,8 +164,7 @@ class CreateUsersTable extends Migration
 
 
         Schema::create('events', function ($t) {
-            $t->increments('id');
-
+            $t->string('id',255)->primary();
             $t->string('title');
             $t->string('location')->nullable();
             $t->string('bg_type', 15)->default('color');
@@ -233,7 +232,7 @@ class CreateUsersTable extends Migration
          * Users table
          */
         Schema::create('orders', function ($t) {
-            $t->increments('id');
+            $t->string('id',255)->primary();;
             $t->unsignedInteger('account_id')->index();
             $t->unsignedInteger('order_status_id');
             $t->nullableTimestamps();
@@ -273,8 +272,8 @@ class CreateUsersTable extends Migration
          */
         Schema::create('tickets', function ($t) {
 
-            $t->increments('id');
-                        $t->nullableTimestamps();
+            $t->string('id',255)->primary();
+            $t->nullableTimestamps();
             $t->softDeletes();
 
             $t->unsignedInteger('edited_by_user_id')->nullable();
@@ -313,7 +312,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('order_items', function ($table) {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->string('title', 255);
             $table->integer('quantity');
             $table->decimal('unit_price', 13, 2);
@@ -403,7 +402,7 @@ class CreateUsersTable extends Migration
          * Tickets / Orders pivot table
          */
         Schema::create('ticket_order', function ($t) {
-            $t->increments('id');
+            $t->string('id',255)->primary();
             $t->integer('order_id')->unsigned()->index();
             $t->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $t->integer('ticket_id')->unsigned()->index();
@@ -423,7 +422,7 @@ class CreateUsersTable extends Migration
 //        });
 
         Schema::create('event_stats', function ($table) {
-            $table->increments('id')->index();
+            $table->string('id',255)->primary();
             $table->date('date');
             $table->integer('views')->default(0);
             $table->integer('unique_views')->default(0);
@@ -438,7 +437,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('attendees', function ($t) {
-            $t->increments('id');
+            $t->string('id',255)->primary();
             $t->unsignedInteger('order_id')->index();
             $t->unsignedInteger('event_id')->index();
             $t->unsignedInteger('ticket_id')->index();
@@ -466,7 +465,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('messages', function ($table) {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->text('message');
             $table->string('subject');
             $table->integer('recipients')->nullable(); //ticket_id or null for all
@@ -484,7 +483,7 @@ class CreateUsersTable extends Migration
 
         Schema::create('event_images', function ($t) {
 
-            $t->increments('id');
+            $t->string('id',255)->primary();
             $t->string('image_path');
             $t->nullableTimestamps();
 
@@ -528,13 +527,13 @@ class CreateUsersTable extends Migration
             'event_images',
         ];
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::statement('SET session_replication_role = "replica";');
 
         foreach($tables as $table) {
             Schema::drop($table);
         }
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::statement('SET session_replication_role = "origin";');
 
     }
 }

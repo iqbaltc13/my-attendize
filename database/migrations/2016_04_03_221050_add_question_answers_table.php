@@ -13,7 +13,7 @@ class AddQuestionAnswersTable extends Migration
     public function up()
     {
         Schema::create('question_answers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id',255)->primary();
 
             $table->integer('attendee_id')->unsigned()->index();
 

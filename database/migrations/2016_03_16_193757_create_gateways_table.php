@@ -22,7 +22,7 @@ class CreateGatewaysTable extends Migration
         });
 
         Schema::create('account_payment_gateways', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->unsignedInteger('account_id');
             $table->unsignedInteger('payment_gateway_id');
             $table->text('config');

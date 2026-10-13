@@ -30,7 +30,9 @@ class CreateAttendeesQuestions extends Migration
          */
         Schema::create('questions', function (Blueprint $table)
         {
-            $table->increments('id');
+            $table->string('id',255)->primary();
+
+
 
             $table->string('title', 255);
             $table->text('instructions');
@@ -52,7 +54,7 @@ class CreateAttendeesQuestions extends Migration
          */
         Schema::create('question_options', function (Blueprint $table)
         {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->string('name');
             $table->integer('question_id')->unsigned()->index();
 
@@ -64,7 +66,7 @@ class CreateAttendeesQuestions extends Migration
          */
         Schema::create('event_question', function(Blueprint $table)
         {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->integer('event_id')->unsigned()->index();
             $table->integer('question_id')->unsigned()->index();
 
@@ -77,7 +79,7 @@ class CreateAttendeesQuestions extends Migration
          */
         Schema::create('question_ticket', function (Blueprint $table)
         {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->integer('question_id')->unsigned()->index();
             $table->integer('ticket_id')->unsigned()->index();
 

@@ -12,7 +12,7 @@ class AddAffiliatesTable extends Migration
     public function up()
     {
         Schema::create('affiliates', function ($table) {
-            $table->increments('id');
+            $table->string('id',255)->primary();
             $table->string('name', 125);
             $table->integer('visits');
             $table->integer('tickets_sold')->default(0);
