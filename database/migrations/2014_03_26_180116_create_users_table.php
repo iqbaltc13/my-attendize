@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
 
         Schema::create('reserved_tickets', function ($table) {
             $table->string('id',255)->primary();
-            $table->integer('ticket_id');
-            $table->integer('event_id');
+            $table->string('ticket_id',255);
+            $table->string('event_id',255);
             $table->integer('quantity_reserved');
             $table->datetime('expires');
             $table->string('session_id', 45);
@@ -121,7 +121,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function ($t) {
 
             $t->string('id',255)->primary();
-            $t->unsignedInteger('account_id')->index();
+            $t->string('account_id',255)->index();
             $t->nullableTimestamps();
             $t->softDeletes();
 
@@ -146,7 +146,7 @@ class CreateUsersTable extends Migration
             $table->nullableTimestamps();
             $table->softDeletes();
 
-            $table->unsignedInteger('account_id')->index();
+            $table->string('account_id',255)->index();
 
             $table->string('name');
             $table->text('about');
@@ -177,10 +177,10 @@ class CreateUsersTable extends Migration
 
             $t->dateTime('on_sale_date')->nullable();
 
-            $t->integer('account_id')->unsigned()->index();
+            $t->string('account_id',255)->index();
             $t->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
 
-            $t->integer('user_id')->unsigned();
+            $t->string('user_id',255);
             $t->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $t->unsignedInteger('currency_id')->nullable();
@@ -190,7 +190,7 @@ class CreateUsersTable extends Migration
             $t->decimal('organiser_fees_volume', 13, 2)->default(0);
             $t->decimal('organiser_fee_fixed', 13, 2)->default(0);
             $t->decimal('organiser_fee_percentage', 4, 3)->default(0);
-            $t->unsignedInteger('organiser_id');
+            $t->string('organiser_id',255);
             $t->foreign('organiser_id')->references('id')->on('organisers');
 
             $t->string('venue_name');
@@ -233,7 +233,7 @@ class CreateUsersTable extends Migration
          */
         Schema::create('orders', function ($t) {
             $t->string('id',255)->primary();;
-            $t->unsignedInteger('account_id')->index();
+            $t->string('account_id',255)->index();
             $t->unsignedInteger('order_status_id');
             $t->nullableTimestamps();
             $t->softDeletes();
@@ -260,7 +260,7 @@ class CreateUsersTable extends Migration
             $t->decimal('amount', 13, 2);
             $t->decimal('amount_refunded', 13, 2)->nullable();
 
-            $t->unsignedInteger('event_id')->index();
+            $t->string('event_id',255)->index();
             $t->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 
             $t->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
@@ -276,11 +276,11 @@ class CreateUsersTable extends Migration
             $t->nullableTimestamps();
             $t->softDeletes();
 
-            $t->unsignedInteger('edited_by_user_id')->nullable();
-            $t->unsignedInteger('account_id')->index();
-            $t->unsignedInteger('order_id')->nullable();
+            $t->string('edited_by_user_id',255)->nullable();
+            $t->string('account_id',255)->index();
+            $t->string('order_id',255)->nullable();
 
-            $t->unsignedInteger('event_id')->index();
+            $t->string('event_id',255)->index();
             $t->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 
             $t->string('title');
@@ -307,7 +307,7 @@ class CreateUsersTable extends Migration
 
             $t->unsignedInteger('public_id')->nullable()->index();
 
-            $t->unsignedInteger('user_id');
+            $t->string('user_id',255);
             $t->foreign('user_id')->references('id')->on('users');
         });
 
@@ -317,7 +317,7 @@ class CreateUsersTable extends Migration
             $table->integer('quantity');
             $table->decimal('unit_price', 13, 2);
             $table->decimal('unit_booking_fee', 13, 2)->nullable();
-            $table->unsignedInteger('order_id');
+            $table->string('order_id',255);
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->softDeletes();
         });
@@ -403,9 +403,9 @@ class CreateUsersTable extends Migration
          */
         Schema::create('ticket_order', function ($t) {
             $t->string('id',255)->primary();
-            $t->integer('order_id')->unsigned()->index();
+            $t->string('order_id',255)->index();
             $t->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $t->integer('ticket_id')->unsigned()->index();
+            $t->string('ticket_id',255)->index();
             $t->foreign('ticket_id')->references('id')->on('users')->onDelete('cascade');
         });
 
@@ -431,16 +431,16 @@ class CreateUsersTable extends Migration
             $table->decimal('sales_volume', 13, 2)->default(0);
             $table->decimal('organiser_fees_volume', 13, 2)->default(0);
 
-            $table->unsignedInteger('event_id')->index();
+            $table->string('event_id',255)->index();
 
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
         });
 
         Schema::create('attendees', function ($t) {
             $t->string('id',255)->primary();
-            $t->unsignedInteger('order_id')->index();
-            $t->unsignedInteger('event_id')->index();
-            $t->unsignedInteger('ticket_id')->index();
+            $t->string('order_id',255)->index();
+            $t->string('event_id',255)->index();
+            $t->string('ticket_id',255)->index();
 
             $t->string('first_name');
             $t->string('last_name');
@@ -456,7 +456,7 @@ class CreateUsersTable extends Migration
             $t->boolean('has_arrived')->default(false);
             $t->dateTime('arrival_time')->nullable();
 
-            $t->unsignedInteger('account_id')->index();
+            $t->string('account_id',255)->index();
             $t->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
 
             $t->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
@@ -469,9 +469,9 @@ class CreateUsersTable extends Migration
             $table->text('message');
             $table->string('subject');
             $table->integer('recipients')->nullable(); //ticket_id or null for all
-            $table->unsignedInteger('account_id')->index();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('event_id');
+            $table->string('account_id',255)->index();
+            $table->string('user_id',255)->index();
+            $table->string('event_id',255)->index();
             $table->unsignedInteger('is_sent')->default(0);
             $table->dateTime('sent_at')->nullable();
             $table->nullableTimestamps();
@@ -487,13 +487,13 @@ class CreateUsersTable extends Migration
             $t->string('image_path');
             $t->nullableTimestamps();
 
-            $t->unsignedInteger('event_id');
+            $t->string('event_id',255)->index();
             $t->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 
-            $t->unsignedInteger('account_id');
+            $t->string('account_id',255)->index();
             $t->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
 
-            $t->unsignedInteger('user_id');
+            $t->string('user_id',255)->index();
             $t->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
