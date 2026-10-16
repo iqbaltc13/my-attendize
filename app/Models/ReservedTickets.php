@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Uuids;
     /*
       Attendize.com   - Event Management & Ticketing
      */
@@ -11,7 +13,14 @@ namespace App\Models;
  *
  * @author Dave
  */
-class ReservedTickets extends \Illuminate\Database\Eloquent\Model
+class ReservedTickets extends Model
 {
+    use SoftDeletes,Uuids;
+
+
+    protected $casts = [
+        'id' => 'string',
+    ];
+    protected $primaryKey = "id";
     //put your code here
 }

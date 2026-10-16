@@ -1,9 +1,21 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Uuids;
+use App\Models\Event;
+use App\Models\Question;
+use App\Models\Attendee;
+
+
 
 class QuestionAnswer extends MyBaseModel
 {
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+    ];
 
     protected $fillable = [
         'question_id',
@@ -28,7 +40,7 @@ class QuestionAnswer extends MyBaseModel
      */
     public function question()
     {
-        return $this->belongsTo(\App\Models\Question::class)->withTrashed();
+        return $this->belongsTo(Question::class)->withTrashed();
     }
 
     /**
@@ -36,7 +48,7 @@ class QuestionAnswer extends MyBaseModel
      */
     public function attendee()
     {
-        return $this->belongsTo(\App\Models\Attendee::class);
+        return $this->belongsTo(Attendee::class);
     }
 
 }

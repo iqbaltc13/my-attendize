@@ -4,9 +4,18 @@ namespace App\Models;
 
 use Cookie;
 use DB;
+use Illuminate\Database\Eloquent\Model;
+use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EventStats extends \Illuminate\Database\Eloquent\Model
+class EventStats extends Model
 {
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+    ];
+    /**
     /**
      * Indicates if the model should be timestamped.
      *

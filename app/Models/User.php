@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use App\Traits\Uuids;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable;
+    use SoftDeletes,Uuids, Notifiable;
+    protected $casts = [
+        'id' => 'string',
+        'email_verified_at' => 'datetime',
+
+    ];
+    protected $primaryKey = "id";
 
     /**
      * The database table used by the model.
@@ -59,9 +66,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+
 
     /**
      * The account associated with the user.

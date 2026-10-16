@@ -7,11 +7,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Uuids;
 use Superbalist\Money\Money;
 
 class Ticket extends MyBaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes,Uuids;
+    protected $casts = [
+        'id' => 'string',
+    ];
+    protected $primaryKey = "id";
 
     protected $dates = ['start_sale_date', 'end_sale_date'];
 

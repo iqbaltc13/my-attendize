@@ -28,7 +28,9 @@ class CreateUsersTable extends Migration
             $table->integer('quantity_reserved');
             $table->datetime('expires');
             $table->string('session_id', 45);
-            $table->nullableTimestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
         });
 
         Schema::create('timezones', function ($t) {
@@ -63,7 +65,9 @@ class CreateUsersTable extends Migration
             $table->string('decimal_point', 3);
             $table->string('thousand_point', 3);
             $table->integer('status');
-            $table->nullableTimestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
         });
 
 
@@ -83,12 +87,13 @@ class CreateUsersTable extends Migration
             $t->unsignedInteger('currency_id')->nullable();
             //$t->unsignedInteger('payment_gateway_id')->default(config('attendize.default_payment_gateway'));
 
-            $t->nullableTimestamps();
-            $t->softDeletes();
+            $t->dateTime('created_at')->nullable();
+            $t->dateTime('updated_at')->nullable();
+            $t->dateTime('deleted_at')->nullable();
 
             $t->string('name')->nullable();
             $t->string('last_ip')->nullable();
-            $t->timestamp('last_login_date')->nullable();
+            $t->dateTime('last_login_date')->nullable();
 
             $t->string('address1')->nullable();
             $t->string('address2')->nullable();
@@ -122,8 +127,9 @@ class CreateUsersTable extends Migration
 
             $t->string('id',255)->primary();
             $t->string('account_id',255)->index();
-            $t->nullableTimestamps();
-            $t->softDeletes();
+            $t->dateTime('created_at')->nullable();
+            $t->dateTime('updated_at')->nullable();
+            $t->dateTime('deleted_at')->nullable();
 
             $t->string('first_name')->nullable();
             $t->string('last_name')->nullable();
@@ -143,8 +149,12 @@ class CreateUsersTable extends Migration
 
             $table->string('id',255)->primary();
 
-            $table->nullableTimestamps();
-            $table->softDeletes();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
+
+
+
 
             $table->string('account_id',255)->index();
 
@@ -224,8 +234,9 @@ class CreateUsersTable extends Migration
 
             $t->boolean('is_live')->default(false);
 
-            $t->nullableTimestamps();
-            $t->softDeletes();
+            $t->dateTime('created_at')->nullable();
+            $t->dateTime('updated_at')->nullable();
+            $t->dateTime('deleted_at')->nullable();
         });
 
         /*
@@ -235,8 +246,9 @@ class CreateUsersTable extends Migration
             $t->string('id',255)->primary();;
             $t->string('account_id',255)->index();
             $t->unsignedInteger('order_status_id');
-            $t->nullableTimestamps();
-            $t->softDeletes();
+            $t->dateTime('created_at')->nullable();
+            $t->dateTime('updated_at')->nullable();
+            $t->dateTime('deleted_at')->nullable();
 
             $t->string('first_name');
             $t->string('last_name');
@@ -273,8 +285,12 @@ class CreateUsersTable extends Migration
         Schema::create('tickets', function ($t) {
 
             $t->string('id',255)->primary();
-            $t->nullableTimestamps();
-            $t->softDeletes();
+            $t->dateTime('created_at')->nullable();
+            $t->dateTime('updated_at')->nullable();
+            $t->dateTime('deleted_at')->nullable();
+
+
+
 
             $t->string('edited_by_user_id',255)->nullable();
             $t->string('account_id',255)->index();
@@ -319,7 +335,9 @@ class CreateUsersTable extends Migration
             $table->decimal('unit_booking_fee', 13, 2)->nullable();
             $table->string('order_id',255);
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->softDeletes();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
         });
 
         /*
@@ -333,8 +351,9 @@ class CreateUsersTable extends Migration
 //
 //
 //        Schema::create('questions', function($t) {
-//            $t->nullableTimestamps();
-//            $t->softDeletes();
+//            $t->dateTime('created_at')->nullable();
+//            $t->dateTime('updated_at')->nullable();
+//            $t->dateTime('deleted_at')->nullable();
 //
 //            $t->increments('id');
 //
@@ -391,9 +410,9 @@ class CreateUsersTable extends Migration
 //         */
 //        Schema::create('event_question', function($t) {
 //            $t->increments('id');
-//            $t->integer('event_id')->unsigned()->index();
-//            $t->foreign('event_id')->references('id')->on('event')->onDelete('cascade');
-//            $t->integer('question_id')->unsigned()->index();
+//            $t->string('event_id',255)->index();
+//            $t->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+//            $t->integer('question_id')->index();
 //            $t->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
 //        });
 //
@@ -406,7 +425,7 @@ class CreateUsersTable extends Migration
             $t->string('order_id',255)->index();
             $t->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $t->string('ticket_id',255)->index();
-            $t->foreign('ticket_id')->references('id')->on('users')->onDelete('cascade');
+            $t->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
         });
 
 
@@ -449,8 +468,9 @@ class CreateUsersTable extends Migration
             $t->string('reference', 20);
             $t->integer('private_reference_number')->index();
 
-            $t->nullableTimestamps();
-            $t->softDeletes();
+            $t->dateTime('created_at')->nullable();
+            $t->dateTime('updated_at')->nullable();
+            $t->dateTime('deleted_at')->nullable();
 
             $t->boolean('is_cancelled')->default(false);
             $t->boolean('has_arrived')->default(false);
@@ -474,7 +494,9 @@ class CreateUsersTable extends Migration
             $table->string('event_id',255)->index();
             $table->unsignedInteger('is_sent')->default(0);
             $table->dateTime('sent_at')->nullable();
-            $table->nullableTimestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
 
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
@@ -485,7 +507,9 @@ class CreateUsersTable extends Migration
 
             $t->string('id',255)->primary();
             $t->string('image_path');
-            $t->nullableTimestamps();
+            $t->dateTime('created_at')->nullable();
+            $t->dateTime('updated_at')->nullable();
+            $t->dateTime('deleted_at')->nullable();
 
             $t->string('event_id',255)->index();
             $t->foreign('event_id')->references('id')->on('events')->onDelete('cascade');

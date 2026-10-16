@@ -8,7 +8,11 @@ use DB;
 
 class Account extends MyBaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes,Uuids;
+    protected $casts = [
+        'id' => 'string',
+    ];
+    protected $primaryKey = "id";
 
     /**
      * The validation rules

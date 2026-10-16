@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Str;
+use App\Traits\Uuids;
 use Superbalist\Money\Money;
 use URL;
 
@@ -15,7 +16,11 @@ use URL;
  */
 class Event extends MyBaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes,Uuids;
+    protected $casts = [
+        'id' => 'string',
+    ];
+    protected $primaryKey = "id";
 
     protected $dates = ['start_date', 'end_date', 'on_sale_date'];
     /**

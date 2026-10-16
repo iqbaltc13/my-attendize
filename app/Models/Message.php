@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use App\Models\Ticket;
+
     /*
       Attendize.com   - Event Management & Ticketing
      */
@@ -13,6 +18,11 @@ namespace App\Models;
  */
 class Message extends MyBaseModel
 {
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+    ];
     /**
      * The attributes that are mass assignable.
      *

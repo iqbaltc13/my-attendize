@@ -1,9 +1,16 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Uuids;
 
 class QuestionOption extends MyBaseModel
 {
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+    ];
     /**
      * Indicates if the model should be timestamped.
      *

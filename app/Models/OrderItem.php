@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
     /*
       Attendize.com   - Event Management & Ticketing
      */
@@ -13,6 +16,14 @@ namespace App\Models;
  */
 class OrderItem extends MyBaseModel
 {
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+    ];
+
+    /**
+
     /**
      * Indicates if the model should be timestamped.
      *

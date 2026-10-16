@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use PDF;
 use Illuminate\Support\Str;
 use Superbalist\Money\Money;
+use App\Traits\Uuids;
 
 class Order extends MyBaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes,Uuids;
+    protected $casts = [
+        'id' => 'string',
+    ];
+    protected $primaryKey = "id";
 
     /**
      * The validation rules of the model.

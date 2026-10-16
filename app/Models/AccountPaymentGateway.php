@@ -2,13 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use App\Models\PaymentGateway;
+
 
 
 class AccountPaymentGateway extends MyBaseModel
 {
 
-    use softDeletes;
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+    ];
+
+
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +47,7 @@ class AccountPaymentGateway extends MyBaseModel
      */
     public function payment_gateway()
     {
-        return $this->belongsTo(\App\Models\PaymentGateway::class, 'payment_gateway_id', 'id');
+        return $this->belongsTo(PaymentGateway::class, 'payment_gateway_id', 'id');
     }
 
     /**

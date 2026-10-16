@@ -5,6 +5,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Traits\Uuids;
+
+
 
 /**
  * @property bool is_cancelled
@@ -14,7 +17,15 @@ use Illuminate\Support\Str;
  */
 class Attendee extends MyBaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+        'is_refunded'  => 'boolean',
+        'is_cancelled' => 'boolean',
+    ];
+
+
 
     /**
      * @var array $fillable
@@ -32,10 +43,7 @@ class Attendee extends MyBaseModel
         'arrival_time'
     ];
 
-    protected $casts = [
-        'is_refunded'  => 'boolean',
-        'is_cancelled' => 'boolean',
-    ];
+
 
     /**
      * Generate a private reference number for the attendee. Use for checking in the attendee.

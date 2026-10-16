@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Model;
 
 /*
  * Adapted from: https://github.com/hillelcoren/invoice-ninja/blob/master/app/models/EntityModel.php
  */
 
-class MyBaseModel extends \Illuminate\Database\Eloquent\Model
+class MyBaseModel extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -154,7 +155,7 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
             $table = $this->getTable();
 
             $query->where(function ($query) use ($accountId, $table) {
-                $query->whereRaw(\DB::raw('('.$table.'.account_id = '.$accountId.')'));
+                $query->where('account_id', $accountId);
             });
         }
 

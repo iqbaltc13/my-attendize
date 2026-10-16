@@ -31,20 +31,14 @@ class CreateAttendeesQuestions extends Migration
         Schema::create('questions', function (Blueprint $table)
         {
             $table->string('id',255)->primary();
-
-
-
             $table->string('title', 255);
             $table->text('instructions');
-
             $table->unsignedInteger('question_type_id');
-            $table->unsignedInteger('account_id')->index();
-
+            $table->string('account_id',255)->index();
             $table->tinyInteger('is_required')->default(0);
-
-            $table->timestamps();
-            $table->softDeletes();
-
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
             $table->foreign('question_type_id')->references('id')->on('question_types');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
@@ -56,7 +50,7 @@ class CreateAttendeesQuestions extends Migration
         {
             $table->string('id',255)->primary();
             $table->string('name');
-            $table->integer('question_id')->unsigned()->index();
+            $table->string('question_id',255)->index();
 
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
@@ -66,9 +60,9 @@ class CreateAttendeesQuestions extends Migration
          */
         Schema::create('event_question', function(Blueprint $table)
         {
-            $table->string('id',255)->primary();
-            $table->integer('event_id')->unsigned()->index();
-            $table->integer('question_id')->unsigned()->index();
+            $table->bigIncrements('id');
+            $table->string('event_id',255)->index();
+            $table->string('question_id',255)->index();
 
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
@@ -79,9 +73,9 @@ class CreateAttendeesQuestions extends Migration
          */
         Schema::create('question_ticket', function (Blueprint $table)
         {
-            $table->string('id',255)->primary();
-            $table->integer('question_id')->unsigned()->index();
-            $table->integer('ticket_id')->unsigned()->index();
+            $table->bigIncrements('id');
+            $table->string('question_id',255)->index();
+            $table->string('ticket_id',255)->index();
 
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');

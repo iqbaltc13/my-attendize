@@ -7,10 +7,18 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Str;
 use Image;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Uuids;
+
+
 
 class Organiser extends MyBaseModel implements AuthenticatableContract
 {
-    use Authenticatable;
+    use Authenticatable,Uuids,SoftDeletes;
+    protected $casts = [
+        'id' => 'string',
+    ];
+    protected $primaryKey = "id";
     /**
      * The validation rules for the model.
      *

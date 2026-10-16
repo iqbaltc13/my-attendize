@@ -14,11 +14,12 @@ class CreateEventAccessCodesTable extends Migration
     public function up()
     {
         Schema::create('event_access_codes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('event_id');
+            $table->bigIncrements('id');
+            $table->string('event_id',255)->index();
             $table->string('code')->default('');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
 
             // Add events table foreign key
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');

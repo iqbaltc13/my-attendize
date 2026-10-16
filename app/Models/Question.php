@@ -3,7 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Models\Ticket;
+use App\Traits\Uuids;
+use Illuminate\Support\Str;
+use App\Models\Event;
+use App\Models\QuestionType;
+use App\Models\QuestionAnswer;
+use App\Models\QuestionOption;
 /**
  * Description of Questions.
  *
@@ -11,7 +17,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Question extends MyBaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes,Uuids;
+    protected $primaryKey = "id";
+    protected $casts = [
+        'id' => 'string',
+    ];
+
+
 
     /**
      * The events associated with the question.
@@ -21,7 +33,7 @@ class Question extends MyBaseModel
      */
     public function events()
     {
-        return $this->belongsToMany(\App\Models\Event::class);
+        return $this->belongsToMany(Event::class);
     }
 
     /**
@@ -32,13 +44,15 @@ class Question extends MyBaseModel
      */
     public function question_type()
     {
-        return $this->belongsTo(\App\Models\QuestionType::class);
+        return $this->belongsTo(QuestionType::class);
     }
 
     public function answers()
     {
-        return $this->hasMany(\App\Models\QuestionAnswer::class);
+        return $this->hasMany(QuestionAnswer::class);
     }
+
+
 
     /**
      * The options associated with the question.
@@ -48,12 +62,12 @@ class Question extends MyBaseModel
      */
     public function options()
     {
-        return $this->hasMany(\App\Models\QuestionOption::class);
+        return $this->hasMany(QuestionOption::class);
     }
 
     public function tickets()
     {
-        return $this->belongsToMany(\App\Models\Ticket::class);
+        return $this->belongsToMany(Ticket::class);
     }
 
     /**

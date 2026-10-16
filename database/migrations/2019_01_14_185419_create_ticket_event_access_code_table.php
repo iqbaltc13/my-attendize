@@ -14,10 +14,12 @@ class CreateTicketEventAccessCodeTable extends Migration
     public function up()
     {
         Schema::create('ticket_event_access_code', function (Blueprint $table) {
-            $table->string('id',255)->primary();
-            $table->unsignedInteger('ticket_id');
-            $table->unsignedInteger('event_access_code_id');
-            $table->timestamps();
+            $table->bigIncrements('id');
+            $table->string('ticket_id',255)->nullable();
+            $table->string('event_access_code_id',255)->nullable();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
 
             $table->foreign('ticket_id')->references('id')->on('tickets');
             $table->foreign('event_access_code_id')->references('id')->on('event_access_codes');
