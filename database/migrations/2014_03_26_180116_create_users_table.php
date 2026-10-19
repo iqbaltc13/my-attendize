@@ -551,13 +551,13 @@ class CreateUsersTable extends Migration
             'event_images',
         ];
 
-        DB::statement('SET session_replication_role = "replica";');
+       
 
         foreach($tables as $table) {
-            Schema::drop($table);
+            Schema::dropIfExists($table);
         }
 
-        DB::statement('SET session_replication_role = "origin";');
+       
 
     }
 }

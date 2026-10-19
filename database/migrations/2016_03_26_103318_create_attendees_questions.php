@@ -98,12 +98,12 @@ class CreateAttendeesQuestions extends Migration
             'question_ticket',
         ];
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+       
 
         foreach ($tables as $table) {
-            Schema::drop($table);
+            Schema::dropIfExists($table);
         }
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+       
     }
 }
