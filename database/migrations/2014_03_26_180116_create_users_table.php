@@ -538,26 +538,26 @@ class CreateUsersTable extends Migration
             'datetime_formats',
             'currencies',
             'accounts',
+            'events',
+            'tickets',
+            'messages',
+            'event_images',
             'users',
             'organisers',
-            'events',
             'orders',
-            'tickets',
             'order_items',
             'ticket_order',
             'event_stats',
             'attendees',
-            'messages',
-            'event_images',
         ];
 
-       
+
 
         foreach($tables as $table) {
             Schema::dropIfExists($table);
         }
 
-       
+
 
     }
 }
