@@ -533,11 +533,11 @@ class CreateUsersTable extends Migration
 
             'ticket_statuses',
             'reserved_tickets',
-            'timezones',
             'date_formats',
             'datetime_formats',
             'currencies',
             'accounts',
+            'timezones',
             'events',
             'tickets',
             'messages',
