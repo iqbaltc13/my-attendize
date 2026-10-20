@@ -91,19 +91,19 @@ class CreateAttendeesQuestions extends Migration
     public function down()
     {
         $tables = [
-            'question_types',
             'questions',
+            'question_types',
             'question_options',
             'event_question',
             'question_ticket',
         ];
 
-       
+
 
         foreach ($tables as $table) {
             Schema::dropIfExists($table);
         }
 
-       
+
     }
 }
