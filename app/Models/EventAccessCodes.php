@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Uuids;
 
 class EventAccessCodes extends MyBaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes,Uuids;
+    protected $casts = [
+        'id' => 'string',
+    ];
+    protected $primaryKey = "id";
 
     /**
      * @param integer $event_id

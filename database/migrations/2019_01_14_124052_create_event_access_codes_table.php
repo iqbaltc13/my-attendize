@@ -14,7 +14,7 @@ class CreateEventAccessCodesTable extends Migration
     public function up()
     {
         Schema::create('event_access_codes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->string('id',255)->primary();
             $table->string('event_id',255)->index();
             $table->string('code')->default('');
             $table->dateTime('created_at')->nullable();
