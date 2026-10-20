@@ -16,6 +16,9 @@ class Order extends MyBaseModel
     use SoftDeletes,Uuids;
     protected $casts = [
         'id' => 'string',
+        'is_business' => 'boolean',
+        'is_refunded' => 'boolean',
+        'is_partially_refunded' => 'boolean',
     ];
     protected $primaryKey = "id";
 
@@ -55,11 +58,7 @@ class Order extends MyBaseModel
         'order_email.email' => 'Please enter a valid email',
     ];
 
-    protected $casts = [
-        'is_business' => 'boolean',
-        'is_refunded' => 'boolean',
-        'is_partially_refunded' => 'boolean',
-    ];
+
 
     /**
      * The items associated with the order.
