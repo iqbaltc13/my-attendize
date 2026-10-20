@@ -530,14 +530,15 @@ class CreateUsersTable extends Migration
     public function down()
     {
         $tables = [
-
             'ticket_statuses',
             'reserved_tickets',
-            'date_formats',
+
             'datetime_formats',
-            'currencies',
+
             'accounts',
             'timezones',
+            'date_formats',
+            'currencies',
             'events',
             'tickets',
             'messages',
