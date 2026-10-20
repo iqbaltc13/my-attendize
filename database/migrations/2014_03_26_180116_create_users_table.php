@@ -530,7 +530,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         $tables = [
-            'order_statuses',
+
             'ticket_statuses',
             'reserved_tickets',
             'timezones',
@@ -547,6 +547,7 @@ class CreateUsersTable extends Migration
             'orders',
             'order_items',
             'ticket_order',
+            'order_statuses',
             'event_stats',
             'attendees',
         ];
