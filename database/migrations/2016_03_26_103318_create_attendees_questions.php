@@ -91,11 +91,11 @@ class CreateAttendeesQuestions extends Migration
     public function down()
     {
         $tables = [
-            'questions',
-            'question_types',
             'question_options',
             'event_question',
             'question_ticket',
+            'questions',
+            'question_types',
         ];
 
 
