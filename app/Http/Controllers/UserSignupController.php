@@ -107,7 +107,7 @@ class UserSignupController extends Controller
         }catch (Exception $e) {
             DB::rollback();
             return Redirect::back()
-                    ->with(['message' => 'Terjadi Error', 'failed' => true])
+                    ->with(['message' => 'Terjadi Error', 'failed' => true]);
         }
 
         
