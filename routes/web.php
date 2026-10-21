@@ -39,6 +39,8 @@ use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserLogoutController;
 use App\Http\Controllers\UserSignupController;
 
+
+Route::get('view-logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::group(
     [
         'prefix'     => LaravelLocalization::setLocale(),
