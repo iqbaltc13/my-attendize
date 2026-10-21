@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Mail;
 use Services\Captcha\Factory;
 use Illuminate\Support\Facades\Lang;
+use DB;
+use Exception;
 
 class UserSignupController extends Controller
 {
@@ -67,39 +69,48 @@ class UserSignupController extends Controller
                     ->withInput();
             }
         }
+        DB::beginTransaction();
+        try {
+            $account_data = $request->only(['email', 'first_name', 'last_name']);
+            $account_data['currency_id'] = config('attendize.default_currency');
+            $account_data['timezone_id'] = config('attendize.default_timezone');
+            $account = Account::create($account_data);
 
-        $account_data = $request->only(['email', 'first_name', 'last_name']);
-        $account_data['currency_id'] = config('attendize.default_currency');
-        $account_data['timezone_id'] = config('attendize.default_timezone');
-        $account = Account::create($account_data);
+            $user = new User();
+            $user_data = $request->only(['email', 'first_name', 'last_name']);
+            $user_data['password'] = Hash::make($request->get('password'));
+            $user_data['account_id'] = $account->id;
+            $user_data['is_parent'] = 1;
+            $user_data['is_registered'] = 1;
+            $user = User::create($user_data);
 
-        $user = new User();
-        $user_data = $request->only(['email', 'first_name', 'last_name']);
-        $user_data['password'] = Hash::make($request->get('password'));
-        $user_data['account_id'] = $account->id;
-        $user_data['is_parent'] = 1;
-        $user_data['is_registered'] = 1;
-        $user = User::create($user_data);
+            $payment_gateway_data = [
+                'payment_gateway_id' => PaymentGateway::getDefaultPaymentGatewayId(),
+                'account_id' => $account->id,
+                'config' => '{"apiKey":"","publishableKey":""}',
+            ];
+            $paymentGateway = AccountPaymentGateway::create($payment_gateway_data);
 
-        $payment_gateway_data = [
-            'payment_gateway_id' => PaymentGateway::getDefaultPaymentGatewayId(),
-            'account_id' => $account->id,
-            'config' => '{"apiKey":"","publishableKey":""}',
-        ];
-        $paymentGateway = AccountPaymentGateway::create($payment_gateway_data);
+            if ($is_attendize) {
+                // TODO: Do this async?
+                Mail::send(Lang::locale().'.Emails.ConfirmEmail',
+                    ['first_name' => $user->first_name, 'confirmation_code' => $user->confirmation_code],
+                    function ($message) use ($request) {
+                        $message->to($request->get('email'), $request->get('first_name'))
+                            ->subject(trans("Email.attendize_register"));
+                    });
+            }
 
-        if ($is_attendize) {
-            // TODO: Do this async?
-            Mail::send(Lang::locale().'.Emails.ConfirmEmail',
-                ['first_name' => $user->first_name, 'confirmation_code' => $user->confirmation_code],
-                function ($message) use ($request) {
-                    $message->to($request->get('email'), $request->get('first_name'))
-                        ->subject(trans("Email.attendize_register"));
-                });
+            session()->flash('message', 'Success! You can now login.');
+
+            DB::commit();
+        }catch (Exception $e) {
+            DB::rollback();
+            return Redirect::back()
+                    ->with(['message' => 'Terjadi Error', 'failed' => true])
         }
 
-        session()->flash('message', 'Success! You can now login.');
-
+        
         return redirect('login');
     }
 

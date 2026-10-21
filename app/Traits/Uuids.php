@@ -6,7 +6,7 @@ trait Uuids
    /**
      * Boot function from Laravel.
      */
-    protected static function boot()
+    protected static function bootUuids()
     {
         parent::boot();
         static::creating(function ($model) {
