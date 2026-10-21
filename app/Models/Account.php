@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Attendize\Utils;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use App\Traits\Uuids;
 
 class Account extends MyBaseModel
 {
