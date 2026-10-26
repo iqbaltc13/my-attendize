@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Model;
+
 /*
   Attendize.com   - Event Management & Ticketing
  */
 
-class Affiliate extends \Illuminate\Database\Eloquent\Model
+class Affiliate extends Model
 {
+    use Uuids;
     /**
      * The attributes that are mass assignable.
      *

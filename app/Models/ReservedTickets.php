@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Model;
+
     /*
       Attendize.com   - Event Management & Ticketing
      */
@@ -11,7 +14,13 @@ namespace App\Models;
  *
  * @author Dave
  */
-class ReservedTickets extends \Illuminate\Database\Eloquent\Model
+class ReservedTickets extends Model
 {
-    //put your code here
+    use Uuids;
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool $timestamps
+     */
+    
 }
