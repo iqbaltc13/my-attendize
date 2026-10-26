@@ -158,9 +158,7 @@ class MyBaseModel extends Model
         if ($accountId !== false) {
             $table = $this->getTable();
 
-            $query->where(function ($query) use ($accountId, $table) {
-                $query->whereRaw(\DB::raw('('.$table.'.account_id = '.$accountId.')'));
-            });
+            $query->where($table . '.account_id', $accountId);
         }
 
         return $query;
