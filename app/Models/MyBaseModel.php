@@ -6,12 +6,15 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Model;
+
+
 
 /*
  * Adapted from: https://github.com/hillelcoren/invoice-ninja/blob/master/app/models/EntityModel.php
  */
 
-class MyBaseModel extends \Illuminate\Database\Eloquent\Model
+class MyBaseModel extends Model
 {
     /**
      * Indicates if the model should be timestamped.
