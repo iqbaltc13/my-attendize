@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\Uuids;
 
 /*
  * Adapted from: https://github.com/hillelcoren/invoice-ninja/blob/master/app/models/EntityModel.php
@@ -17,6 +18,7 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
      *
      * @var bool $timestamps
      */
+    use Uuids;
     public $timestamps = true;
     /**
      * Indicates whether the model uses soft deletes.

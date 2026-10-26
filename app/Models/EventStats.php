@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Cookie;
+use App\Traits\Uuids;
 use DB;
+use Illuminate\Database\Eloquent\Model;
 
-class EventStats extends \Illuminate\Database\Eloquent\Model
+class EventStats extends Model
 {
+    use Uuids;
     /**
      * Indicates if the model should be timestamped.
      *

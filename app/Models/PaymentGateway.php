@@ -14,6 +14,16 @@ class PaymentGateway extends MyBaseModel
     /**
      * @return array
      */
+    public function getIncrementing()
+    {
+        return true;
+    }
+
+    public function getKeyType()
+    {
+        return 'int';
+    }
+
     static public function getAllWithDefaultSet()
     {
         $payment_gateways = PaymentGateway::all()->toArray();
